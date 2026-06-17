@@ -1,0 +1,1849 @@
+<?php
+// PHP Sidebar Sections & Permission Check definitions
+$sections = [
+    'my_desk' => [
+        'title' => 'My Desk',
+        'icon' => 'fa-desktop',
+        'color' => 'indigo',
+        'check' => function () {
+            return in_array('viewApplyLeave', permission_data) || in_array('viewLeaveApproval', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Apply Leave',
+                'url' => base_url('leave/applyleave'),
+                'check' => function () {
+                    return in_array('viewApplyLeave', permission_data); }
+            ],
+            [
+                'title' => 'Leave Approval',
+                'url' => base_url('leave/Leaveapproval'),
+                'check' => function () {
+                    return in_array('viewLeaveApproval', permission_data); }
+            ],
+            [
+                'title' => 'My Attendance',
+                'url' => base_url('payroll/dashboard/myattendance'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Profile',
+                'url' => base_url('payroll/dashboard/dashboard/profile'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Change Password',
+                'url' => '#',
+                'onclick' => "changePassword('" . $this->session->userdata('user_id') . "')",
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'reception' => [
+        'title' => 'Reception',
+        'icon' => 'fa-bell-o',
+        'color' => 'orange',
+        'check' => function () {
+            return in_array('viewVisitorTypeMaster', permission_data) || in_array('viewVisitorPurposeMaster', permission_data) || in_array('viewDepartmentMaster', permission_data) || in_array('viewVisitMaster', permission_data) || in_array('viewEntryModeMaster', permission_data) || in_array('viewaddVisitorForm', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Visitor Type Master',
+                'url' => base_url('reception/Visitortype_master'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Visitor Purpose Master',
+                'url' => base_url('reception/Visitorpurpose_master'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Department Master',
+                'url' => base_url('reception/Department_master'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Visit Master',
+                'url' => base_url('reception/Visit_master'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Entry Mode Master',
+                'url' => base_url('reception/Sysmode_master'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Visitor Form',
+                'url' => base_url('reception/Visitreg_form'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'general_setting' => [
+        'title' => 'General Setting',
+        'icon' => 'fa-cogs',
+        'color' => 'teal',
+        'check' => function () {
+            return in_array('viewSchoolSetting', permission_data) || in_array('viewSession', permission_data) || in_array('viewShift', permission_data) || in_array('viewHoliday', permission_data) || in_array('viewRole', permission_data) || in_array('viewActiveMonth', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'School Setting',
+                'url' => base_url('school_master/setting'),
+                'check' => function () {
+                    return in_array('viewSchoolSetting', permission_data); }
+            ],
+            [
+                'title' => 'Session Setting',
+                'url' => base_url('school_master/setting/sessionView'),
+                'check' => function () {
+                    return in_array('viewSession', permission_data); }
+            ],
+            [
+                'title' => 'Holiday Master',
+                'url' => base_url('holiday'),
+                'check' => function () {
+                    return in_array('viewHoliday', permission_data); }
+            ],
+            [
+                'title' => 'Role Setting',
+                'url' => base_url('role_master/role'),
+                'check' => function () {
+                    return in_array('viewRole', permission_data); }
+            ],
+            [
+                'title' => 'Active Month For Payroll',
+                'url' => base_url('school_master/setting/currentMonth'),
+                'check' => function () {
+                    return in_array('viewActiveMonth', permission_data); }
+            ]
+        ]
+    ],
+    'human_resource' => [
+        'title' => 'Human Resource',
+        'icon' => 'fa-users',
+        'color' => 'blue',
+        'check' => function () {
+            return in_array('viewEmployee', permission_data) || in_array('viewEmpAttendance', permission_data) || in_array('viewDesignation', permission_data) || in_array('viewQual', permission_data) || in_array('viewLeaveType', permission_data) || in_array('viewDisabledEmpList', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Designation',
+                'url' => base_url('payroll/master/designation'),
+                'check' => function () {
+                    return in_array('viewDesignation', permission_data); }
+            ],
+            [
+                'title' => 'Qualification',
+                'url' => base_url('payroll/master/qualification'),
+                'check' => function () {
+                    return in_array('viewQual', permission_data); }
+            ],
+            [
+                'title' => 'Shift Master',
+                'url' => base_url('shift_master/shiftgroup'),
+                'check' => function () {
+                    return in_array('viewShift', permission_data); }
+            ],
+            [
+                'title' => 'Employee List',
+                'url' => base_url('employee/employee'),
+                'check' => function () {
+                    return in_array('viewEmployee', permission_data); }
+            ],
+            [
+                'title' => 'Daily Employee Attendance',
+                'url' => base_url('punching/manualpunch'),
+                'check' => function () {
+                    return in_array('viewEmpAttendance', permission_data); }
+            ],
+            [
+                'title' => 'Separated Employee List',
+                'url' => base_url('employee/employee/disabledEmployeeList'),
+                'check' => function () {
+                    return in_array('viewDisabledEmpList', permission_data); }
+            ]
+        ]
+    ],
+    'settings' => [
+        'title' => 'Settings',
+        'icon' => 'fa-graduation-cap',
+        'color' => 'purple',
+        'check' => function () {
+            return in_array('viewSection', permission_data) || in_array('viewClass', permission_data) || in_array('viewAssignSubjectTeacher', permission_data) || in_array('viewAssignClassTeacher', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Session Change',
+                'url' => base_url('Ses/session_change'),
+                'check' => function () {
+                    return in_array('viewClass', permission_data); }
+            ],
+            [
+                'title' => 'Class Master',
+                'url' => base_url('Fees_master/class_master'),
+                'check' => function () {
+                    return in_array('viewClass', permission_data); }
+            ],
+            [
+                'title' => 'Section Master',
+                'url' => base_url('Fees_master/section_master'),
+                'check' => function () {
+                    return in_array('viewSection', permission_data); }
+            ],
+            [
+                'title' => 'Add Subjects',
+                'url' => base_url('Teacher_master/clswise_subj_allco'),
+                'check' => function () {
+                    return in_array('viewSection', permission_data); }
+            ],
+            [
+                'title' => 'Allocate Subject Teacher for Class',
+                'url' => base_url('timetable/subjectAllocation'),
+                'check' => function () {
+                    return in_array('viewAssignSubjectTeacher', permission_data); }
+            ],
+            [
+                'title' => 'Allocated Teacher Report',
+                'url' => base_url('timetable_report/timetablereport/teacherWiseSubjectAllocation'),
+                'check' => function () {
+                    return in_array('viewAssignSubjectTeacher', permission_data); }
+            ]
+        ]
+    ],
+    'student_information' => [
+        'title' => 'Academics',
+        'icon' => 'fa-university',
+        'color' => 'pink',
+        'check' => function () {
+            return in_array('viewStudentMaster', permission_data) || in_array('viewScholarship', permission_data) || in_array('viewHouseMaster', permission_data) || in_array('viewCategoryMaster', permission_data) || in_array('viewWardType', permission_data) || in_array('viewReligion', permission_data) || in_array('viewStudentRecordKeeping', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'House Master',
+                'url' => base_url('Fees_master/house_master'),
+                'check' => function () {
+                    return in_array('viewHouseMaster', permission_data); }
+            ],
+            [
+                'title' => 'Category Master',
+                'url' => base_url('Fees_master/Category_master'),
+                'check' => function () {
+                    return in_array('viewCategoryMaster', permission_data); }
+            ],
+            [
+                'title' => 'Ward Type Master',
+                'url' => base_url('Fees_master/ward_master'),
+                'check' => function () {
+                    return in_array('viewWardType', permission_data); }
+            ],
+            [
+                'title' => 'Religion Master',
+                'url' => base_url('Fees_master/religion_master'),
+                'check' => function () {
+                    return in_array('viewReligion', permission_data); }
+            ],
+            [
+                'title' => 'Student Master',
+                'url' => base_url('Student_details/student_master'),
+                'check' => function () {
+                    return in_array('viewStudentMaster', permission_data); }
+            ],
+            [
+                'title' => 'Disabled Student',
+                'url' => base_url('Disabledstudent/index'),
+                'check' => function () {
+                    return in_array('viewStudentMaster', permission_data); }
+            ],
+            [
+                'title' => 'Parents Login Credential',
+                'url' => base_url('Parentslogincredential/index'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Scholarship',
+                'url' => base_url('Student_details/Scholarship'),
+                'check' => function () {
+                    return in_array('viewScholarship', permission_data); }
+            ],
+            [
+                'title' => 'Student Record Keeping',
+                'url' => base_url('Teacher_master/stu_recored_keeping'),
+                'check' => function () {
+                    return in_array('viewStudentRecordKeeping', permission_data); }
+            ],
+            [
+                'title' => 'Generate Roll No.',
+                'url' => base_url('Student_details/generate_rollno'),
+                'check' => function () {
+                    return in_array('viewStudentMaster', permission_data); }
+            ]
+        ]
+    ],
+    'student_attendance' => [
+        'title' => 'Student Attendance',
+        'icon' => 'fa-calendar-check-o',
+        'color' => 'green',
+        'check' => function () {
+            return in_array('viewDailyAttendance', permission_data) || in_array('viewDailyAttenReport', permission_data) || in_array('viewMonthlyAttenReport', permission_data) || in_array('viewStuAttenType', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Student Attendance Type',
+                'url' => base_url('student/master/Student_attendance_type'),
+                'check' => function () {
+                    return in_array('viewStuAttenType', permission_data); }
+            ],
+            [
+                'title' => 'Daily Attendance',
+                'url' => base_url('student/Student_attendance'),
+                'check' => function () {
+                    return in_array('viewDailyAttendance', permission_data); }
+            ],
+            [
+                'title' => 'Daily Attendance Report',
+                'url' => base_url('student/report/Report/daily_wise'),
+                'check' => function () {
+                    return in_array('viewDailyAttenReport', permission_data); }
+            ],
+            [
+                'title' => 'Monthly Attendance Report',
+                'url' => base_url('student/report/Report/monthly_wise'),
+                'check' => function () {
+                    return in_array('viewMonthlyAttenReport', permission_data); }
+            ],
+            [
+                'title' => 'Class Wise Attendance Sheet',
+                'url' => base_url('student/report/DailyReport'),
+                'check' => function () {
+                    return in_array('viewDailyAttendance', permission_data); }
+            ],
+            [
+                'title' => 'Attendance Percentage Report',
+                'url' => base_url('student/report/attendancepercentagereport'),
+                'check' => function () {
+                    return in_array('viewDailyAttenReport', permission_data); }
+            ],
+            [
+                'title' => 'Attendance Delete',
+                'url' => base_url('student/studentAttDelete'),
+                'check' => function () {
+                    return in_array('viewDailyAttenReport', permission_data); }
+            ]
+        ]
+    ],
+    'reports' => [
+        'title' => 'Reports',
+        'icon' => 'fa-file-text-o',
+        'color' => 'violet',
+        'check' => function () {
+            return in_array('viewFeeReports', permission_data) || in_array('viewFeeDefaulterList', permission_data) || in_array('viewFeeHeadWiseDefaulter', permission_data) || in_array('viewClassReport', permission_data) || in_array('viewOtherReport', permission_data) || in_array('viewAdmitCard', permission_data) || in_array('viewTermWiseReportCard', permission_data) || in_array('viewStudentReport', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Fee Reports',
+                'url' => base_url('Report/typeofreports'),
+                'check' => function () {
+                    return in_array('viewFeeReports', permission_data); }
+            ],
+            [
+                'title' => 'Bus Reports',
+                'url' => base_url('Bus_report/show_report'),
+                'check' => function () {
+                    return in_array('viewFeeReports', permission_data); }
+            ],
+            [
+                'title' => 'Fee Defaulter List',
+                'url' => base_url('Report/Fee_Defaulter_List'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ],
+            [
+                'title' => 'Bank Transaction Report',
+                'url' => base_url('Report/Bank_trans'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ],
+            [
+                'title' => 'Fee Paid List',
+                'url' => base_url('Report/Fee_Paid_List'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ],
+            [
+                'title' => 'Fee Head Wise Defaulter List',
+                'url' => base_url('Report/Fee_head_Defaulter_List'),
+                'check' => function () {
+                    return in_array('viewFeeHeadWiseDefaulter', permission_data); }
+            ],
+            [
+                'title' => 'Admission Form Sales Report',
+                'url' => base_url('Adm_form_sale/adm_form_sale'),
+                'check' => function () {
+                    return in_array('viewFeeHeadWiseDefaulter', permission_data); }
+            ],
+            [
+                'title' => 'List Of Receipt Report',
+                'url' => base_url('List_of_Receipt/list_of_rct'),
+                'check' => function () {
+                    return in_array('viewFeeHeadWiseDefaulter', permission_data); }
+            ],
+            [
+                'title' => 'Ward Category Report',
+                'url' => base_url('Ward_report/ward_report'),
+                'check' => function () {
+                    return in_array('viewFeeHeadWiseDefaulter', permission_data); }
+            ],
+            [
+                'title' => 'Class Report',
+                'url' => base_url('Class_report/show_class'),
+                'check' => function () {
+                    return in_array('viewClassReport', permission_data); }
+            ],
+            [
+                'title' => 'Student Report',
+                'url' => base_url('Student_report/show_studentpanel'),
+                'check' => function () {
+                    return in_array('viewStudentReport', permission_data); }
+            ],
+            [
+                'title' => 'Other Report',
+                'url' => base_url('Other_report/show_other_report'),
+                'check' => function () {
+                    return in_array('viewOtherReport', permission_data); }
+            ],
+            [
+                'title' => 'Card (Admit Id)',
+                'url' => base_url('Card/show_other_report'),
+                'check' => function () {
+                    return in_array('viewAdmitCard', permission_data); }
+            ],
+            [
+                'title' => 'Previous Year Remaining Defaulter',
+                'url' => base_url('Report/pre_Fee_Defaulter_List_reman'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Religion Strength Report',
+                'url' => base_url('Student_strength/show_strenght_religion'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Term Wise Report Card',
+                'url' => base_url('report_card/Report_card/index'),
+                'check' => function () {
+                    return in_array('viewTermWiseReportCard', permission_data); }
+            ],
+            [
+                'title' => 'Annual Report Card',
+                'url' => base_url('report_card/Annual_report_card'),
+                'check' => function () {
+                    return in_array('viewTermWiseReportCard', permission_data); }
+            ]
+        ]
+    ],
+
+    'fees_collection' => [
+        'title' => 'Fees Collection',
+        'icon' => 'fa-credit-card',
+        'color' => 'gold',
+        'check' => function () {
+            return in_array('viewSchoolCollection', permission_data) || in_array('viewCanceReprintFeeReceipt', permission_data) || in_array('cancelReprintBookReceipts', permission_data) || in_array('transferCardSwipe', permission_data) || in_array('viewFeeHeadMaster', permission_data) || in_array('viewFeeGeneration', permission_data) || in_array('viewLateFineMaster', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Fee Head Master',
+                'url' => base_url('Fees_master/fee_head_master'),
+                'check' => function () {
+                    return in_array('viewFeeHeadMaster', permission_data); }
+            ],
+            [
+                'title' => 'Monthly Fee Collection',
+                'url' => base_url('Cmonthly_collection/month_collection'),
+                'check' => function () {
+                    return in_array('viewFeeHeadMaster', permission_data); }
+            ],
+            [
+                'title' => 'Change Payment Mode',
+                'url' => base_url('Fees_collection/pay_mode_update'),
+                'check' => function () {
+                    return in_array('viewFeeHeadMaster', permission_data); }
+            ],
+            [
+                'title' => 'Miscellaneous Collection',
+                'url' => base_url('Fees_collection/misc_collection'),
+                'check' => function () {
+                    return in_array('viewFeeHeadMaster', permission_data); }
+            ],
+            [
+                'title' => 'Collection Without Admission',
+                'url' => base_url('Fees_collection/collection_without_adm'),
+                'check' => function () {
+                    return in_array('viewFeeHeadMaster', permission_data); }
+            ],
+            [
+                'title' => 'Late Fine Master',
+                'url' => base_url('Late_finemaster/late_fine'),
+                'check' => function () {
+                    return in_array('viewLateFineMaster', permission_data); }
+            ],
+            [
+                'title' => 'Fee Generation',
+                'url' => base_url('Feegeneration/fee_generation_gui'),
+                'check' => function () {
+                    return in_array('viewFeeGeneration', permission_data); }
+            ],
+            [
+                'title' => 'Cancel/Re-Print Fee Receipts',
+                'url' => base_url('Cancel_reprint/cancel_reprintt'),
+                'check' => function () {
+                    return in_array('viewCanceReprintFeeReceipt', permission_data); }
+            ]
+        ]
+    ],
+    'book_sales' => [
+        'title' => 'Book Sales',
+        'icon' => 'fa-shopping-cart',
+        'color' => 'brown',
+        'check' => function () {
+            return in_array('viewSection', permission_data) || in_array('viewClass', permission_data) || in_array('viewAssignSubjectTeacher', permission_data) || in_array('viewAssignClassTeacher', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Book Purchase',
+                'url' => base_url('book_sales/Book_purchase'),
+                'check' => function () {
+                    return in_array('viewClass', permission_data); }
+            ],
+            [
+                'title' => 'Book Master',
+                'url' => base_url('book_sales/book_master'),
+                'check' => function () {
+                    return in_array('viewSection', permission_data); }
+            ],
+            [
+                'title' => 'Book Collection',
+                'url' => base_url('book_sales/Book_sales/book_collection'),
+                'check' => function () {
+                    return in_array('viewSection', permission_data); }
+            ]
+        ]
+    ],
+    'examination' => [
+        'title' => 'Examination',
+        'icon' => 'fa-pencil-square-o',
+        'color' => 'red',
+        'check' => function () {
+            return in_array('viewClassSubAllocation', permission_data) || in_array('viewStuSubAllocation', permission_data) || in_array('viewMainSubject', permission_data) || in_array('viewCoScholGrade', permission_data) || in_array('viewDisciplineGrade', permission_data) || in_array('viewDisciGradeSkill', permission_data) || in_array('viewRemarksAlloc', permission_data) || in_array('viewMaxMarks', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Lock Exam',
+                'url' => base_url('permission/PermissionMaxMarks'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Class-Wise Subject Allocation',
+                'url' => base_url('Teacher_master/clswise_subj_allco'),
+                'check' => function () {
+                    return in_array('viewClassSubAllocation', permission_data); }
+            ],
+            [
+                'title' => 'Student-Wise Subject Allocation',
+                'url' => base_url('Teacher_master/stuwise_subj_allco'),
+                'check' => function () {
+                    return in_array('viewStuSubAllocation', permission_data); }
+            ],
+            [
+                'title' => 'Maximum Marks Allocation',
+                'url' => base_url('Teacher_master/max_marks_allco'),
+                'check' => function () {
+                    return in_array('viewMaxMarks', permission_data); }
+            ],
+            [
+                'title' => 'Marks Entry Main Subject',
+                'url' => base_url('Marks_entry/index'),
+                'check' => function () {
+                    return in_array('viewMainSubject', permission_data); }
+            ],
+            [
+                'title' => 'Co-Scholastic Grade Entry',
+                'url' => base_url('Grade/index'),
+                'check' => function () {
+                    return in_array('viewCoScholGrade', permission_data); }
+            ],
+            [
+                'title' => 'Co-Scholastic Grade Entry Report',
+                'url' => base_url('Grade/co_scholastic_report_entry'),
+                'check' => function () {
+                    return in_array('viewCoScholGrade', permission_data); }
+            ],
+            [
+                'title' => 'Marks Entry Junior',
+                'url' => base_url('gradejunior/GradeJunior'),
+                'check' => function () {
+                    return in_array('viewCoScholGrade', permission_data); }
+            ],
+            [
+                'title' => 'Discipline Grade',
+                'url' => base_url('Grade/discipline_term'),
+                'check' => function () {
+                    return in_array('viewDisciplineGrade', permission_data); }
+            ],
+            [
+                'title' => 'Remarks Allocation',
+                'url' => base_url('Remarks/index'),
+                'check' => function () {
+                    return in_array('viewRemarksAlloc', permission_data); }
+            ]
+        ]
+    ],
+    'payroll' => [
+        'title' => 'Payroll',
+        'icon' => 'fa-money',
+        'color' => 'emerald',
+        'check' => function () {
+            return in_array('viewPayControl', permission_data) || in_array('viewSecondShiftAttendance', permission_data) || in_array('viewMonthlyEmpAtten', permission_data) || in_array('viewPayslipGen', permission_data) || in_array('viewPFESI', permission_data) || in_array('addPFESI', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Create PF ESI',
+                'url' => base_url('payroll/master/pfesi/create'),
+                'check' => function () {
+                    return in_array('addPFESI', permission_data); }
+            ],
+            [
+                'title' => 'View PF ESI',
+                'url' => base_url('payroll/master/pfesi'),
+                'check' => function () {
+                    return in_array('viewPFESI', permission_data); }
+            ],
+            [
+                'title' => 'Pay Control',
+                'url' => base_url('pay_control/paycontrol'),
+                'check' => function () {
+                    return in_array('viewPayControl', permission_data); }
+            ],
+            [
+                'title' => 'Shift Attendance',
+                'url' => base_url('payroll/salary/second_shift'),
+                'check' => function () {
+                    return in_array('viewSecondShiftAttendance', permission_data); }
+            ],
+            [
+                'title' => 'Allowance Bulk',
+                'url' => base_url('bulk_updation/employeeallowance'),
+                'check' => function () {
+                    return in_array('editAllowanceBulk', permission_data); }
+            ],
+            [
+                'title' => 'Deduction Bulk',
+                'url' => base_url('bulk_updation/employeededuction'),
+                'check' => function () {
+                    return in_array('editDeductionBulk', permission_data); }
+            ],
+            [
+                'title' => 'Approval of Arrear Salary',
+                'url' => base_url('payroll/salary/salincrement'),
+                'check' => function () {
+                    return in_array('editApprovalofArrearSalary', permission_data); }
+            ],
+            [
+                'title' => 'Monthly Attendance Generation',
+                'url' => base_url('payroll/salary/Attendance_gen'),
+                'check' => function () {
+                    return in_array('viewMonthlyEmpAtten', permission_data); }
+            ],
+            [
+                'title' => 'Payslip Generation',
+                'url' => base_url('payroll/salary/payslip_gen'),
+                'check' => function () {
+                    return in_array('viewPayslipGen', permission_data); }
+            ]
+        ]
+    ],
+    'class_assessment' => [
+        'title' => 'Class Assessment',
+        'icon' => 'fa-tasks',
+        'color' => 'violet',
+        'check' => function () {
+            return in_array('viewHomework', permission_data) || in_array('viewUploadedHomeworkDetails', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Exam Master',
+                'url' => base_url('onlineexam/teacher/exam_master/ExamMaster'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Exam Schedule',
+                'url' => base_url('onlineexam/teacher/exam_schedule/ExamSchedule'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Add Question',
+                'url' => base_url('onlineexam/teacher/addquestion/AddExamQuestion'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Copy Correction',
+                'url' => base_url('onlineexam/copy_correction/CopyCorrection/'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Copy Correction Status Summary Sheet',
+                'url' => base_url('onlineexam/reports/Conso_correctionsheet'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Exam Student Attendance Summary',
+                'url' => base_url('onlineexam/reports/Schedule_report/schedulelist'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Objective Marksheet',
+                'url' => base_url('onlineexam/reports/MarksReportstudent'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Subjective Marksheet',
+                'url' => base_url('onlineexam/reports/MarksReportstudentsubjectiv'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => '(Subjective+Objective) Marksheet',
+                'url' => base_url('onlineexam/reports/MarksReportstudentsubj_obj'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Objective Tabulation Sheet',
+                'url' => base_url('onlineexam/reports/MarksReportstudentanskey'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Exam Wise Student List',
+                'url' => base_url('onlineexam/student_master/Student_details/stulist'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'e_homework' => [
+        'title' => 'E-Homework',
+        'icon' => 'fa-book',
+        'color' => 'cyan',
+        'check' => function () {
+            return in_array('viewHomework', permission_data) || in_array('viewUploadedHomeworkDetails', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Add Homework',
+                'url' => base_url('e_exam/homework/AddHomework'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Homework Copy Correction',
+                'url' => base_url('e_exam/homework/CopyCorrection'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Corrected Homework Copy',
+                'url' => base_url('e_exam/homework/HomeworkReport'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Homework Summary Status',
+                'url' => base_url('e_exam/homework/HomeworkReport1'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'transport_management' => [
+        'title' => 'Transport Management',
+        'icon' => 'fa-bus',
+        'color' => 'amber',
+        'check' => function () {
+            return in_array('viewVehicleMaster', permission_data) || in_array('viewVehicleIncharge', permission_data) || in_array('viewBusStoppageMaster', permission_data) || in_array('viewAddBusTrip', permission_data) || in_array('viewDriverMaster', permission_data) || in_array('viewAddBusRoute', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Vehicle Master',
+                'url' => base_url('Bus_master_add/bus_details'),
+                'check' => function () {
+                    return in_array('viewVehicleMaster', permission_data); }
+            ],
+            [
+                'title' => 'Vehicle Incharge',
+                'url' => base_url('Bus_incharge_entry/bus_incharge'),
+                'check' => function () {
+                    return in_array('viewVehicleIncharge', permission_data); }
+            ],
+            [
+                'title' => 'Bus Stoppage Master',
+                'url' => base_url('Fees_master/Bus_Stoppage_Master'),
+                'check' => function () {
+                    return in_array('viewBusStoppageMaster', permission_data); }
+            ],
+            [
+                'title' => 'Add Bus Trip',
+                'url' => base_url('Bus_trip_master/index'),
+                'check' => function () {
+                    return in_array('viewAddBusTrip', permission_data); }
+            ],
+            [
+                'title' => 'Driver Master',
+                'url' => base_url('Driver_master/index'),
+                'check' => function () {
+                    return in_array('viewDriverMaster', permission_data); }
+            ],
+            [
+                'title' => 'Add Bus Route',
+                'url' => base_url('Add_bus_route/index'),
+                'check' => function () {
+                    return in_array('viewAddBusRoute', permission_data); }
+            ]
+        ]
+    ],
+    'salary_reports' => [
+        'title' => 'Salary Reports',
+        'icon' => 'fa-line-chart',
+        'color' => 'rose',
+        'check' => function () {
+            return in_array('viewBankSalaryLetter', permission_data) || in_array('viewSalaryBill', permission_data) || in_array('viewMonthlyPFReport', permission_data) || in_array('viewPfEsiStatement', permission_data) || in_array('viewMonthlySalarySlip', permission_data) || in_array('viewEMployeeReport', permission_data) || in_array('viewMonthlyLeaveReport', permission_data) || in_array('viewMonthlyAttenReports', permission_data) || in_array('viewAllowanceReport', permission_data) || in_array('viewYearlySalaryReport', permission_data) || in_array('viewDeductionReport', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Employee List',
+                'url' => base_url('payroll_other_report/designationreport'),
+                'check' => function () {
+                    return in_array('viewEMployeeReport', permission_data); }
+            ],
+            [
+                'title' => 'Attendance Register',
+                'url' => base_url('payroll_other_report/attendance_report'),
+                'check' => function () {
+                    return in_array('viewMonthlyAttenReports', permission_data); }
+            ],
+            [
+                'title' => 'Monthly Leave',
+                'url' => base_url('payroll_other_report/leavereport/monthWiseLeaveReport'),
+                'check' => function () {
+                    return in_array('viewMonthlyLeaveReport', permission_data); }
+            ],
+            [
+                'title' => 'Salary Bill',
+                'url' => base_url('salary_report/salary_bill'),
+                'check' => function () {
+                    return in_array('viewSalaryBill', permission_data); }
+            ],
+            [
+                'title' => 'Bank Salary Letter',
+                'url' => base_url('salary_report/bank_letter'),
+                'check' => function () {
+                    return in_array('viewBankSalaryLetter', permission_data); }
+            ],
+            [
+                'title' => 'Group Insurance Report',
+                'url' => base_url('salary_report/groupinsreport'),
+                'check' => function () {
+                    return in_array('viewBankSalaryLetter', permission_data); }
+            ],
+            [
+                'title' => 'LIC Report',
+                'url' => base_url('salary_report/licreport'),
+                'check' => function () {
+                    return in_array('viewBankSalaryLetter', permission_data); }
+            ],
+            [
+                'title' => 'Monthly PF',
+                'url' => base_url('salary_report/monthlypf_report'),
+                'check' => function () {
+                    return in_array('viewMonthlyPFReport', permission_data); }
+            ],
+            [
+                'title' => 'Monthly PF & ESI Statement Employee Wise',
+                'url' => base_url('salary_report/pfstatement'),
+                'check' => function () {
+                    return in_array('viewPfEsiStatement', permission_data); }
+            ],
+            [
+                'title' => 'Monthly Allowance',
+                'url' => base_url('payroll_other_report/allowance_report'),
+                'check' => function () {
+                    return in_array('viewAllowanceReport', permission_data); }
+            ],
+            [
+                'title' => 'Monthly Deduction',
+                'url' => base_url('payroll_other_report/deduction_report'),
+                'check' => function () {
+                    return in_array('viewDeductionReport', permission_data); }
+            ],
+            [
+                'title' => 'Monthly Salary Slip',
+                'url' => base_url('salary_report/monthly_salary_slip'),
+                'check' => function () {
+                    return in_array('viewMonthlySalarySlip', permission_data); }
+            ],
+            [
+                'title' => 'Annual Salary Statement',
+                'url' => base_url('payroll_other_report/yearly_salary_report'),
+                'check' => function () {
+                    return in_array('viewYearlySalaryReport', permission_data); }
+            ],
+            [
+                'title' => 'Form 16',
+                'url' => base_url('salary_report/form16'),
+                'check' => function () {
+                    return in_array('viewYearlySalaryReport', permission_data); }
+            ]
+        ]
+    ],
+    'library_master' => [
+        'title' => 'Library Master',
+        'icon' => 'fa-book',
+        'color' => 'navy',
+        'check' => function () {
+            return login_details['ROLE_ID'] == 11 || login_details['ROLE_ID'] == 4;
+        },
+        'options' => [
+            [
+                'title' => 'Almirah Master',
+                'url' => base_url('library/RackMaster'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Type Master',
+                'url' => base_url('library/BookTypeMaster'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Add Books',
+                'url' => base_url('library/BookMaster'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'News Paper/Magazine Master',
+                'url' => base_url('library/NewsMagazineMaster'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Employee Advance Book Issue',
+                'url' => base_url('library/TeacherBookIssue/teacher_adv_book_issue'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'News Paper Journal Entry',
+                'url' => base_url('library/NewsMagazineMaster/Journal_Entry'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'book_issue' => [
+        'title' => 'Book Issue',
+        'icon' => 'fa-exchange',
+        'color' => 'slate',
+        'check' => function () {
+            return login_details['ROLE_ID'] == 11 || login_details['ROLE_ID'] == 4;
+        },
+        'options' => [
+            [
+                'title' => 'Student Book Issue',
+                'url' => base_url('library/StudentBookIssue'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Student Book Return',
+                'url' => base_url('library/StudentBookReturn'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Teacher Book Issue',
+                'url' => base_url('library/TeacherBookIssue'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Teacher Book Return',
+                'url' => base_url('library/TeacherBookReturn'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'library_report' => [
+        'title' => 'Library Report',
+        'icon' => 'fa-folder-open-o',
+        'color' => 'sky',
+        'check' => function () {
+            return login_details['ROLE_ID'] == 11 || login_details['ROLE_ID'] == 4;
+        },
+        'options' => [
+            [
+                'title' => 'Book Issue Report Student',
+                'url' => base_url('library/LibraryReport'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Issue Report Employee',
+                'url' => base_url('library/LibraryReport/book_report_emp'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Issue Status Report',
+                'url' => base_url('library/LibraryReport/book_report_sts'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Returned Report',
+                'url' => base_url('library/LibraryReport/BookReturnRpt'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Returned Report Employee',
+                'url' => base_url('library/LibraryReport/BookReturnRpt'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Stock Register',
+                'url' => base_url('library/LibraryReport/BookStockReg'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Lost & Damage',
+                'url' => base_url('library/LibraryReport/BookStockReg_bw_lost'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'News Paper Report',
+                'url' => base_url('library/NewsMagazineMaster/newspaper_report'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Wise Stock Register',
+                'url' => base_url('library/LibraryReport/BookStockReg_bw'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Book Barcode',
+                'url' => base_url('library/Barcode'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Almirah Wise Report',
+                'url' => base_url('library/RackMaster/newAlmirahMaster'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+
+    'audit_reports' => [
+        'title' => 'Audit Reports',
+        'icon' => 'fa-balance-scale',
+        'color' => 'fuchsia',
+        'check' => function () {
+            return in_array('viewFeeReports', permission_data) || in_array('viewFeeDefaulterList', permission_data) || in_array('viewFeeHeadWiseDefaulter', permission_data) || in_array('viewClassReport', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Receivable Report',
+                'url' => base_url('Reconcilation'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ],
+            [
+                'title' => 'Advance Report',
+                'url' => base_url('Reconcilation/advance'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ],
+            [
+                'title' => 'Prev. Month Collection Report',
+                'url' => base_url('Reconcilation/prev_month_payment'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ],
+            [
+                'title' => 'Actual Collection Report',
+                'url' => base_url('Reconcilation/actual'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ],
+            [
+                'title' => 'Dues Report',
+                'url' => base_url('Reconcilation/dues'),
+                'check' => function () {
+                    return in_array('viewFeeDefaulterList', permission_data); }
+            ]
+        ]
+    ],
+    'certificate' => [
+        'title' => 'Certificate',
+        'icon' => 'fa-certificate',
+        'color' => 'mint',
+        'check' => function () {
+            return in_array('viewTransferCertificate', permission_data) || in_array('viewCancelReprintTC', permission_data) || in_array('viewCharacterCertificate', permission_data) || in_array('viewBonafideCertificate', permission_data) || in_array('viewDOBCertificate', permission_data) || in_array('viewTutionFeeCertificate', permission_data) || in_array('viewFeePaidCertificate', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Transfer Certificate (TC)',
+                'url' => base_url('Certificate/transfer_certificate'),
+                'check' => function () {
+                    return in_array('viewTransferCertificate', permission_data); }
+            ],
+            [
+                'title' => 'Cancel Reprint TC',
+                'url' => base_url('Certificate/cancel_reprint_tc'),
+                'check' => function () {
+                    return in_array('viewCancelReprintTC', permission_data); }
+            ],
+            [
+                'title' => 'Character Certificate',
+                'url' => base_url('Certificate/char_show'),
+                'check' => function () {
+                    return in_array('viewCharacterCertificate', permission_data); }
+            ],
+            [
+                'title' => 'Bonafide Certificate',
+                'url' => base_url('Bonafide_certificate/show_bonafide'),
+                'check' => function () {
+                    return in_array('viewBonafideCertificate', permission_data); }
+            ],
+            [
+                'title' => 'Date of Birth Certificate',
+                'url' => base_url('Date_of_birth_certificate/show_dob'),
+                'check' => function () {
+                    return in_array('viewDOBCertificate', permission_data); }
+            ],
+            [
+                'title' => 'Tution Fee Certificate',
+                'url' => base_url('Tution_fee_certificate/show_tution'),
+                'check' => function () {
+                    return in_array('viewTutionFeeCertificate', permission_data); }
+            ],
+            [
+                'title' => 'Fee Paid(All) Certificate',
+                'url' => base_url('Fee_paid_all_certificate/show_tution'),
+                'check' => function () {
+                    return in_array('viewFeePaidCertificate', permission_data); }
+            ]
+        ]
+    ],
+    'account_master' => [
+        'title' => 'Account Master',
+        'icon' => 'fa-calculator',
+        'color' => 'indigo',
+        'check' => function () {
+            return in_array('viewNarration', permission_data) || in_array('viewAccountGroup', permission_data) || in_array('viewLedgerMaster', permission_data) || in_array('viewSchoolGroup', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Narration',
+                'url' => base_url('account_master/narration'),
+                'check' => function () {
+                    return in_array('viewNarration', permission_data); }
+            ],
+            [
+                'title' => 'Account Group',
+                'url' => base_url('account_master/accountgroup'),
+                'check' => function () {
+                    return in_array('viewAccountGroup', permission_data); }
+            ],
+            [
+                'title' => 'School Group',
+                'url' => base_url('account_master/schoolgroup'),
+                'check' => function () {
+                    return in_array('viewSchoolGroup', permission_data); }
+            ],
+            [
+                'title' => 'Ledger Master',
+                'url' => base_url('account_master/ledgermaster'),
+                'check' => function () {
+                    return in_array('viewLedgerMaster', permission_data); }
+            ]
+        ]
+    ],
+    'voucher_entry' => [
+        'title' => 'Voucher Entry',
+        'icon' => 'fa-file-text-o',
+        'color' => 'gray',
+        'check' => function () {
+            return in_array('viewReceiptVoucherCounterCollection', permission_data) || in_array('viewReceiptVoucherOnlineCollection', permission_data) || in_array('viewGeneralEntry', permission_data) || in_array('viewUpdateVoucher', permission_data) || in_array('viewPrintVoucher', permission_data) || in_array('viewCancelVoucher', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Receipt Voucher (Counter Collection)',
+                'url' => base_url('account_master/voucherentryfee'),
+                'check' => function () {
+                    return in_array('viewReceiptVoucherCounterCollection', permission_data); }
+            ],
+            [
+                'title' => 'Receipt Voucher (Online Collection)',
+                'url' => base_url('account_master/voucherentryonlinefee'),
+                'check' => function () {
+                    return in_array('viewReceiptVoucherOnlineCollection', permission_data); }
+            ],
+            [
+                'title' => 'General Entry',
+                'url' => base_url('account_master/voucherentry'),
+                'check' => function () {
+                    return in_array('viewGeneralEntry', permission_data); }
+            ],
+            [
+                'title' => 'Update Voucher',
+                'url' => base_url('account_master/voucherentry/voucherView'),
+                'check' => function () {
+                    return in_array('viewUpdateVoucher', permission_data); }
+            ],
+            [
+                'title' => 'Print Voucher',
+                'url' => base_url('account_master/printvoucher'),
+                'check' => function () {
+                    return in_array('viewPrintVoucher', permission_data); }
+            ],
+            [
+                'title' => 'Cancel Voucher',
+                'url' => base_url('account_master/cancelvoucher'),
+                'check' => function () {
+                    return in_array('viewCancelVoucher', permission_data); }
+            ]
+        ]
+    ],
+    'accounts_report' => [
+        'title' => 'Accounts Report',
+        'icon' => 'fa-bar-chart',
+        'color' => 'royal',
+        'check' => function () {
+            return in_array('viewCashBook', permission_data) || in_array('viewLedger', permission_data) || in_array('viewTrialBalance', permission_data) || in_array('viewTrialBalanceinSeparateColumn', permission_data) || in_array('viewTrialBalanceMonthly', permission_data) || in_array('viewLedgerWiseEntryPassed', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Cash Book',
+                'url' => base_url('accounts_report/cashbookreport'),
+                'check' => function () {
+                    return in_array('viewCashBook', permission_data); }
+            ],
+            [
+                'title' => 'Ledger',
+                'url' => base_url('accounts_report/ledgerreport'),
+                'check' => function () {
+                    return in_array('viewLedger', permission_data); }
+            ],
+            [
+                'title' => 'Trial Balance',
+                'url' => base_url('accounts_report/trialbalancereport'),
+                'check' => function () {
+                    return in_array('viewTrialBalance', permission_data); }
+            ],
+            [
+                'title' => 'Trial Balance (OB) in Separate Column',
+                'url' => base_url('accounts_report/trialbalancereport/separateColumn'),
+                'check' => function () {
+                    return in_array('viewTrialBalanceinSeparateColumn', permission_data); }
+            ],
+            [
+                'title' => 'Trial Balance (Monthly)',
+                'url' => base_url('accounts_report/trialbalancereport/monthlyReport'),
+                'check' => function () {
+                    return in_array('viewTrialBalanceMonthly', permission_data); }
+            ],
+            [
+                'title' => 'Ledger Wise Entry Passed',
+                'url' => base_url('accounts_report/ledgerreport/ledgerPassedReport'),
+                'check' => function () {
+                    return in_array('viewLedgerWiseEntryPassed', permission_data); }
+            ]
+        ]
+    ],
+    'inventory_master' => [
+        'title' => 'Inventory Master',
+        'icon' => 'fa-archive',
+        'color' => 'olive',
+        'check' => function () {
+            return in_array('viewDepartment', permission_data) || in_array('viewSupplier', permission_data) || in_array('viewItemGroup', permission_data) || in_array('viewItemMaster', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Department',
+                'url' => base_url('inventory_master/department'),
+                'check' => function () {
+                    return in_array('viewDepartment', permission_data); }
+            ],
+            [
+                'title' => 'Supplier',
+                'url' => base_url('inventory_master/supplier'),
+                'check' => function () {
+                    return in_array('viewSupplier', permission_data); }
+            ],
+            [
+                'title' => 'Item Group',
+                'url' => base_url('inventory_master/itemgroup'),
+                'check' => function () {
+                    return in_array('viewItemGroup', permission_data); }
+            ],
+            [
+                'title' => 'Item Master',
+                'url' => base_url('inventory_master/itemmaster'),
+                'check' => function () {
+                    return in_array('viewItemMaster', permission_data); }
+            ]
+        ]
+    ],
+    'notice' => [
+        'title' => 'Notice',
+        'icon' => 'fa-bullhorn',
+        'color' => 'orange',
+        'check' => function () {
+            return in_array('viewNotice', permission_data) || in_array('viewSentNoticeDetails', permission_data) || in_array('viewNoticeP', permission_data) || in_array('viewNoticeReportP', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Add/View Notice/',
+                'url' => base_url('notice/AddNotice'),
+                'check' => function () {
+                    return in_array('viewNotice', permission_data); }
+            ],
+            [
+                'title' => 'Add/View Notice',
+                'url' => base_url('notice/AddNoticePrincipal'),
+                'check' => function () {
+                    return in_array('viewNoticeP', permission_data); }
+            ],
+            [
+                'title' => 'Notice Report Details',
+                'url' => base_url('notice/NoticeReport'),
+                'check' => function () {
+                    return in_array('viewSentNoticeDetails', permission_data); }
+            ]
+        ]
+    ],
+    'leave' => [
+        'title' => 'Leave',
+        'icon' => 'fa-calendar-times-o',
+        'color' => 'red',
+        'check' => function () {
+            return in_array('viewHomework', permission_data) || in_array('viewUploadedHomeworkDetails', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Student Leave',
+                'url' => base_url('stu_leave/StuLeave'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'e_learning' => [
+        'title' => 'e-Learning',
+        'icon' => 'fa-laptop',
+        'color' => 'teal',
+        'check' => function () {
+            return in_array('viewHomework', permission_data) || in_array('viewUploadedHomeworkDetails', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Chapter/Topic Master',
+                'url' => base_url('e_learning/TopicChapterMaster'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Upload/View e-Content',
+                'url' => base_url('e_learning/Elearning'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Discussion Room',
+                'url' => base_url('e_learning/Elearning/studentQueries'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'bulk_updation' => [
+        'title' => 'Bulk Updation',
+        'icon' => 'fa-database',
+        'color' => 'deep-purple',
+        'check' => function () {
+            return in_array('viewEmployeeLeave', permission_data) || in_array('viewStudentDetails', permission_data) || in_array('viewStudentMaster', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Employee Leave',
+                'url' => base_url('bulk_updation/employeeleave'),
+                'check' => function () {
+                    return in_array('viewEmployeeLeave', permission_data); }
+            ],
+            [
+                'title' => 'Class Sec Wise',
+                'url' => base_url('bulk_updation/Classsecwise'),
+                'check' => function () {
+                    return in_array('viewStudentDetails', permission_data) || in_array('viewStudentMaster', permission_data); }
+            ]
+        ]
+    ],
+    'sms' => [
+        'title' => 'SMS',
+        'icon' => 'fa-envelope-o',
+        'color' => 'blue',
+        'check' => function () {
+            return true;
+        },
+        'options' => [
+            [
+                'title' => 'Compose Message',
+                'url' => base_url('sms/Compose_msg'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Inbox',
+                'url' => base_url('sms/Inbox'),
+                'check' => function () {
+                    return true; }
+            ],
+            [
+                'title' => 'Sent Message',
+                'url' => '#',
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ],
+    'upload_student_image' => [
+        'title' => 'Upload Student Image',
+        'icon' => 'fa-camera',
+        'color' => 'green',
+        'check' => function () {
+            return in_array('viewDailyAttendance', permission_data) || in_array('viewDailyAttenReport', permission_data) || in_array('viewMonthlyAttenReport', permission_data) || in_array('viewStuAttenType', permission_data);
+        },
+        'options' => [
+            [
+                'title' => 'Upload Student Image',
+                'url' => base_url('Student_img'),
+                'check' => function () {
+                    return true; }
+            ]
+        ]
+    ]
+];
+
+// Check if login is admin and modify the sections array dynamically
+if (isset(login_details['user_name']) && strtolower(login_details['user_name']) == 'admin') {
+    // 1. Move Session Change from settings to general_setting
+    $session_change_opt = null;
+    if (isset($sections['settings']['options'])) {
+        foreach ($sections['settings']['options'] as $idx => $opt) {
+            if ($opt['title'] === 'Session Change') {
+                $session_change_opt = $opt;
+                unset($sections['settings']['options'][$idx]);
+                break;
+            }
+        }
+    }
+    if ($session_change_opt) {
+        $sections['general_setting']['options'][] = $session_change_opt;
+        // Update check function of general_setting to also check for viewClass
+        $old_gs_check = $sections['general_setting']['check'];
+        $sections['general_setting']['check'] = function () use ($old_gs_check) {
+            return $old_gs_check() || in_array('viewClass', permission_data);
+        };
+    }
+
+    // 2. Move Class Master, Section Master, Add Subjects from settings to student_information
+    $moved_opts = [];
+    if (isset($sections['settings']['options'])) {
+        foreach ($sections['settings']['options'] as $idx => $opt) {
+            if (in_array($opt['title'], ['Class Master', 'Section Master', 'Add Subjects'])) {
+                $moved_opts[] = $opt;
+                unset($sections['settings']['options'][$idx]);
+            }
+        }
+    }
+    if (!empty($moved_opts)) {
+        foreach ($moved_opts as $opt) {
+            $sections['student_information']['options'][] = $opt;
+        }
+        // Update check function of student_information to also check for viewClass and viewSection
+        $old_si_check = $sections['student_information']['check'];
+        $sections['student_information']['check'] = function () use ($old_si_check) {
+            return $old_si_check() || in_array('viewClass', permission_data) || in_array('viewSection', permission_data);
+        };
+    }
+
+    // Delete settings card
+    unset($sections['settings']);
+
+    // 3. Rename Library Master card title to Library Management and merge other library/sales options into it
+    if (isset($sections['library_master'])) {
+        $library_master_data = $sections['library_master'];
+        $new_sections = [];
+        foreach ($sections as $k => $val) {
+            if ($k === 'library_master') {
+                $new_sections['library_management'] = $library_master_data;
+                $new_sections['library_management']['title'] = 'Library Management';
+                $new_sections['library_management']['check'] = function () {
+                    return true; };
+            } else {
+                $new_sections[$k] = $val;
+            }
+        }
+        $sections = $new_sections;
+
+        // Add options from book_issue
+        if (isset($sections['book_issue']['options'])) {
+            $sections['library_management']['options'] = array_merge($sections['library_management']['options'], $sections['book_issue']['options']);
+        }
+        // Add options from book_sales
+        if (isset($sections['book_sales']['options'])) {
+            $sections['library_management']['options'] = array_merge($sections['library_management']['options'], $sections['book_sales']['options']);
+        }
+        // Add options from library_report
+        if (isset($sections['library_report']['options'])) {
+            $sections['library_management']['options'] = array_merge($sections['library_management']['options'], $sections['library_report']['options']);
+        }
+
+        // Add the 3 module links as options at the end of the existing options
+        $sections['library_management']['options'][] = [
+            'title' => 'Book Issue',
+            'url' => base_url('payroll/dashboard/emp_dashboard?section=book_issue'),
+            'check' => function () {
+                return true; }
+        ];
+        $sections['library_management']['options'][] = [
+            'title' => 'Book Sales',
+            'url' => base_url('payroll/dashboard/emp_dashboard?section=book_sales'),
+            'check' => function () {
+                return true; }
+        ];
+        $sections['library_management']['options'][] = [
+            'title' => 'Library Report',
+            'url' => base_url('payroll/dashboard/emp_dashboard?section=library_report'),
+            'check' => function () {
+                return true; }
+        ];
+    }
+}
+
+// Perform dynamic filtering based on permissions
+$visible_sections = [];
+foreach ($sections as $key => $sec) {
+    if (isset($sec['check']) && !$sec['check']()) {
+        continue;
+    }
+    $visible_opts = [];
+    if (isset($sec['options'])) {
+        foreach ($sec['options'] as $opt) {
+            if ($opt['check']()) {
+                $visible_opts[] = $opt;
+            }
+        }
+    }
+    if (!empty($sec['options']) && empty($visible_opts)) {
+        continue;
+    }
+    $sec['options'] = $visible_opts;
+    $visible_sections[$key] = $sec;
+}
+$current_section = isset($_GET['section']) ? $_GET['section'] : '';
+if (empty($current_section)) {
+    if (isset(login_details['user_name']) && strtolower(login_details['user_name']) == 'admin') {
+        unset($visible_sections['book_issue']);
+        unset($visible_sections['book_sales']);
+        unset($visible_sections['library_report']);
+    }
+}
+?>
+
+
+<style type="text/css">
+    .sidebar-menu {
+        display: none !important;
+    }
+
+    .left-content {
+        width: 100% !important;
+        float: none !important;
+        padding: 0 30px !important;
+        transition: all 0.3s ease;
+    }
+
+    .page-container {
+        padding-left: 0 !important;
+    }
+
+    .mother-grid-inner {
+        padding: 15px 0;
+    }
+
+
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    .cards-container-section {
+        font-family: 'Inter', sans-serif;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    .section-header-title {
+        font-family: 'Outfit', sans-serif;
+        color: #1e293b;
+        font-weight: 700;
+        font-size: 26px;
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 25px;
+        font-weight: 400;
+    }
+
+    /* Premium Accent Border Card CSS Grid */
+    .premium-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(<?php echo (isset(login_details['user_name']) && strtolower(login_details['user_name']) == 'admin') ? 6 : 5; ?>, 1fr);
+        gap: 24px;
+        margin-top: 15px;
+    }
+
+    @media (max-width: 1200px) {
+        .premium-cards-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    @media (max-width: 992px) {
+        .premium-cards-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .premium-cards-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .premium-cards-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .premium-card-link {
+        text-decoration: none !important;
+        color: inherit !important;
+        display: block;
+    }
+
+    .premium-card-wrapper {
+        background: linear-gradient(135deg, #3278ab 0%, #22567c 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px;
+        padding: 24px 20px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(50, 120, 171, 0.15) !important;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Card Zoom and Shadow Lift Transitions */
+    .premium-card-wrapper:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 10px 25px rgba(34, 86, 124, 0.35) !important;
+        background: linear-gradient(135deg, #3b8cc4 0%, #286794 100%) !important;
+        border-color: rgba(255, 255, 255, 0.25) !important;
+    }
+
+    .premium-card-wrapper i {
+        font-size: 36px;
+        margin-bottom: 16px;
+        color: #ffffff !important;
+        transition: all 0.3s ease;
+        opacity: 0.95;
+    }
+
+    .premium-card-wrapper:hover i {
+        transform: scale(1.15) rotate(2deg);
+        color: #ffffff !important;
+        opacity: 1;
+    }
+
+    .premium-card-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff !important;
+        margin: 0;
+        line-height: 1.3;
+        transition: color 0.3s ease;
+    }
+
+    .premium-card-wrapper:hover .premium-card-title {
+        color: #ffffff !important;
+    }
+
+    .premium-card-desc {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.75) !important;
+        margin-top: 6px;
+        font-weight: 400;
+        line-height: 1.4;
+        transition: color 0.3s ease;
+    }
+
+    .premium-card-wrapper:hover .premium-card-desc {
+        color: #ffffff !important;
+    }
+
+    /* Navigation header and back button styling */
+    .navigation-top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .back-btn-premium {
+        display: inline-flex;
+        align-items: center;
+        background: #f1f5f9;
+        color: #3278ab;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 10px 18px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        transition: all 0.2s ease;
+        text-decoration: none !important;
+    }
+
+    .back-btn-premium:hover {
+        background: #3278ab;
+        color: #ffffff;
+        border-color: #3278ab;
+        transform: translateX(-3px);
+    }
+
+    .back-btn-premium i {
+        margin-right: 8px;
+        font-size: 14px;
+    }
+</style>
+
+<div class="container-fluid cards-container-section">
+
+    <?php if (empty($current_section) || !isset($visible_sections[$current_section])): ?>
+        <!-- ================= MAIN SECTION CARDS (DASHBOARD) ================= -->
+        <h3 class="section-header-title">ERP Control Center</h3>
+        <p class="section-subtitle">Select a module category below to view and manage its available features and options.
+        </p>
+
+        <div class="premium-cards-grid">
+            <?php foreach ($visible_sections as $key => $sec): ?>
+                <a href="<?php echo base_url('payroll/dashboard/emp_dashboard?section=' . $key); ?>" class="premium-card-link">
+                    <div class="premium-card-wrapper">
+                        <i class="fa <?php echo $sec['icon']; ?>"></i>
+                        <h4 class="premium-card-title"><?php echo $sec['title']; ?></h4>
+                        <p class="premium-card-desc"><?php echo count($sec['options']); ?> management tasks</p>
+                    </div>
+                </a>
+            <?php endforeach; ?>
+        </div>
+
+    <?php else: ?>
+        <!-- ================= SUB-OPTION CARDS (SELECTED MODULE) ================= -->
+        <?php
+        $sec = $visible_sections[$current_section];
+        ?>
+        <div class="navigation-top-bar">
+            <div>
+                <h3 class="section-header-title" style="margin: 0; display: inline-flex; align-items: center;">
+                    <i class="fa <?php echo $sec['icon']; ?>" style="margin-right: 12px; color: #3278ab;"></i>
+                    <?php echo $sec['title']; ?> Options
+                </h3>
+            </div>
+            <a href="javascript:void(0);" onclick="window.history.back();" class="back-btn-premium">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+        </div>
+        <p class="section-subtitle" style="margin-top: -15px;">Configure settings and run reports associated with the
+            <?php echo $sec['title']; ?> module.</p>
+
+        <div class="premium-cards-grid">
+            <?php foreach ($sec['options'] as $opt): ?>
+                <?php if (isset($opt['onclick'])): ?>
+                    <a href="#" onclick="<?php echo $opt['onclick']; ?>" class="premium-card-link">
+                    <?php else: ?>
+                        <a href="<?php echo $opt['url']; ?>" class="premium-card-link">
+                        <?php endif; ?>
+                        <div class="premium-card-wrapper">
+                            <i class="fa fa-file-text-o" style="font-size: 28px; margin-bottom: 12px;"></i>
+                            <h4 class="premium-card-title" style="font-size: 15px; font-weight: 500;">
+                                <?php echo $opt['title']; ?></h4>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+        </div>
+
+    <?php endif; ?>
+
+</div>
