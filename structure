@@ -1847,3 +1847,257 @@ if (empty($current_section)) {
     <?php endif; ?>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ERP SYSTEM
+│
+├── My Desk
+│   ├── Leave Management
+│   │   ├── Apply Leave
+│   │   └── Leave Approval
+│   ├── Attendance
+│   │   └── My Attendance
+│   └── User Management
+│       ├── Profile
+│       └── Change Password
+│
+├── Reception
+│   ├── Visitor Setup
+│   │   ├── Visitor Type Master
+│   │   ├── Visitor Purpose Master
+│   │   └── Entry Mode Master
+│   ├── Department Setup
+│   │   └── Department Master
+│   └── Visitor Management
+│       ├── Visit Master
+│       └── Visitor Form
+│
+├── General Setting
+│   ├── School Setting
+│   ├── Session Setting
+│   ├── Holiday Master
+│   ├── Role Setting
+│   ├── Active Month Payroll
+│   └── Session Change
+│
+├── Human Resource
+│   ├── Masters
+│   │   ├── Designation
+│   │   ├── Qualification
+│   │   └── Shift Master
+│   ├── Employee Management
+│   │   ├── Employee List
+│   │   └── Separated Employee
+│   └── Attendance
+│       └── Daily Employee Attendance
+│
+├── Academics
+│   ├── Academic Structure
+│   │   ├── Class Master
+│   │   ├── Section Master
+│   │   └── Session Change
+│   ├── Subject Management
+│   │   ├── Add Subjects
+│   │   ├── Allocate Subject Teacher
+│   │   └── Teacher Allocation Report
+│   └── Curriculum Management
+│
+├── Student Information
+│   ├── Student Setup
+│   │   ├── House Master
+│   │   ├── Category Master
+│   │   ├── Ward Type Master
+│   │   └── Religion Master
+│   ├── Student Management
+│   │   ├── Student Master
+│   │   ├── Disabled Student
+│   │   ├── Generate Roll No
+│   │   └── Scholarship
+│   ├── Parent Management
+│   │   └── Parent Login Credential
+│   └── Records
+│       └── Student Record Keeping
+│
+├── Student Attendance
+│   ├── Attendance Setup
+│   │   └── Attendance Type
+│   ├── Attendance Operations
+│   │   ├── Daily Attendance
+│   │   └── Attendance Delete
+│   └── Attendance Reports
+│       ├── Daily Report
+│       ├── Monthly Report
+│       ├── Class Wise Sheet
+│       └── Attendance Percentage
+│
+├── Fees Collection
+│   ├── Fee Setup
+│   │   ├── Fee Head Master
+│   │   ├── Late Fine Master
+│   │   └── Fee Generation
+│   ├── Collection
+│   │   ├── Monthly Collection
+│   │   ├── Misc Collection
+│   │   └── Collection Without Admission
+│   ├── Payment Management
+│   │   └── Change Payment Mode
+│   └── Receipt Management
+│       └── Cancel/Reprint Receipt
+│
+├── Examination
+│   ├── Subject Allocation
+│   │   ├── Class Wise
+│   │   └── Student Wise
+│   ├── Marks Management
+│   │   ├── Maximum Marks
+│   │   ├── Main Subject Entry
+│   │   └── Junior Marks Entry
+│   ├── Grade Management
+│   │   ├── Co-Scholastic Grade
+│   │   ├── Grade Report
+│   │   └── Discipline Grade
+│   └── Remarks Management
+│       └── Remarks Allocation
+│
+├── Payroll
+│   ├── PF & ESI
+│   │   ├── Create PF ESI
+│   │   └── View PF ESI
+│   ├── Payroll Processing
+│   │   ├── Pay Control
+│   │   ├── Payslip Generation
+│   │   └── Arrear Approval
+│   ├── Attendance Processing
+│   │   ├── Shift Attendance
+│   │   └── Monthly Attendance Generation
+│   └── Bulk Operations
+│       ├── Allowance Bulk
+│       └── Deduction Bulk
+│
+├── Class Assessment
+│   ├── Exam Management
+│   │   ├── Exam Master
+│   │   ├── Exam Schedule
+│   │   └── Add Question
+│   ├── Evaluation
+│   │   ├── Copy Correction
+│   │   └── Correction Summary
+│   └── Results
+│       ├── Objective Marksheet
+│       ├── Subjective Marksheet
+│       ├── Combined Marksheet
+│       └── Tabulation Sheet
+│
+├── E-Homework
+│   ├── Homework Management
+│   │   └── Add Homework
+│   ├── Evaluation
+│   │   └── Homework Correction
+│   └── Reports
+│       ├── Corrected Homework
+│       └── Homework Status
+│
+├── Transport Management
+│   ├── Vehicle Management
+│   │   ├── Vehicle Master
+│   │   └── Vehicle Incharge
+│   ├── Route Management
+│   │   ├── Bus Route
+│   │   └── Bus Trip
+│   ├── Driver Management
+│   │   └── Driver Master
+│   └── Stoppage Management
+│       └── Bus Stoppage
+│
+├── Salary Reports
+│   ├── Employee Reports
+│   ├── Attendance Reports
+│   ├── Leave Reports
+│   ├── Salary Bill
+│   ├── Bank Salary Letter
+│   ├── PF Reports
+│   ├── ESI Reports
+│   ├── Allowance Reports
+│   ├── Deduction Reports
+│   ├── Salary Slip
+│   ├── Annual Salary Statement
+│   └── Form 16
+│
+├── Library Management
+│   ├── Library Master
+│   ├── Book Issue
+│   ├── Book Return
+│   ├── Teacher Book Issue
+│   ├── Book Sales
+│   ├── Book Purchase
+│   └── Library Reports
+│
+├── Notice
+│   ├── Notice Management
+│   ├── Principal Notice
+│   └── Notice Reports
+│
+├── Leave
+│   └── Student Leave
+│
+├── E-Learning
+│   ├── Topic Master
+│   ├── Upload Content
+│   └── Discussion Room
+│
+├── Reports
+│   ├── Fee Reports
+│   ├── Student Reports
+│   ├── Academic Reports
+│   ├── Financial Reports
+│   ├── Transport Reports
+│   └── Other Reports
+│
+├── Audit Reports
+│   ├── Receivable Report
+│   ├── Advance Report
+│   ├── Collection Report
+│   ├── Actual Collection
+│   └── Dues Report
+│
+├── Certificate
+│   ├── Transfer Certificate
+│   ├── Character Certificate
+│   ├── Bonafide Certificate
+│   ├── DOB Certificate
+│   ├── Tuition Fee Certificate
+│   └── Fee Paid Certificate
+│
+├── Account Master
+│   ├── Narration
+│   ├── Account Group
+│   ├── School Group
+│   └── Ledger Master
+│
+├── Voucher Entry
+│   ├── Counter Receipt Voucher
+│   ├── Online Receipt Voucher
+│   ├── General Entry
+│   ├── Update Voucher
+│   ├── Print Voucher
+│   └── Cancel Voucher
+│
+└── Accounts Report
+    ├── Cash Book
+    ├── Ledger
+    ├── Trial Balance
+    ├── Monthly Trial Balance
+    └── Ledger Wise Entry Report
